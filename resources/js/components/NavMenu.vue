@@ -9,6 +9,9 @@
         <el-menu-item index="/cards">
             <router-link to="/cards">{{ $t('nav.cardList') }}</router-link>
         </el-menu-item>
+        <el-menu-item index="/deck">
+            <router-link to="/deck">{{ $t('nav.deck') }}</router-link>
+        </el-menu-item>
 
         <li class="language-links">
             <a :href="enHref" class="language-link" :class="{ active: locale !== 'ja' }">
