@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import articles from './modules/articles';
 import cards from './modules/cards';
-import cardSets from './modules/cardSets';
+import decks from './modules/decks';
 import sets from './modules/sets';
 import statistics from './modules/statistics';
 
@@ -18,7 +18,7 @@ const store = new Vuex.Store({
   modules: {
     articles,
     cards,
-    cardSets,
+    decks,
     sets,
     statistics,
   },
@@ -36,7 +36,7 @@ const store = new Vuex.Store({
         commit('STARTED_INITIAL_TASKS');
         await Promise.all([
           // Dropdowns for filters.
-          dispatch('cardSets/listCardSets'),
+          dispatch('decks/listDecks'),
           dispatch('sets/listSets'),
           // First cards.
           dispatch('listCardsAndFetchStatistics', query),

@@ -10,7 +10,7 @@ class SetController extends Controller
 {
     public function index(SetTransformer $setTransformer)
     {
-        $cardSets = Set::orderBy('name_en')->get();
-        return $this->response->collection($cardSets, $setTransformer);
+        $decks = Set::orderBy('name_en')->get();
+        return $this->response->collection($decks, $setTransformer);
     }
 }
