@@ -1,17 +1,6 @@
 <template>
     <el-form inline ref="form" label-width="120px">
-        <el-form-item label="Set">
-            <el-select placeholder="-" v-model="set">
-                <el-option label="-" value=""></el-option>
-                <el-option label="(Unknown or no set)" value="-1"></el-option>
-                <el-option
-                    v-for="item in setList"
-                    :key="item.id"
-                    :label="item.full_name"
-                    :value="String(item.id)"
-                ></el-option>
-            </el-select>
-        </el-form-item>
+        <SetSelector v-model="set" />
 
         <el-form-item label="Brand">
             <el-select placeholder="-" v-model="brand">
@@ -25,17 +14,7 @@
             </el-select>
         </el-form-item>
 
-        <el-form-item label="Starter deck">
-            <el-select placeholder="-" v-model="deck">
-                <el-option label="-" value=""></el-option>
-                <el-option
-                    v-for="deck in deckList"
-                    :key="deck.id"
-                    :label="deck.name"
-                    :value="'' + deck.id"
-                ></el-option>
-            </el-select>
-        </el-form-item>
+        <DeckSelector v-model="deck" />
 
         <el-form-item :label="$t('cardFilters.cardId')">
             <el-input class="card-id-input" placeholder="LO-0001,LO-0002" v-model="cardId" />
@@ -66,6 +45,8 @@
 <script>
 import debounce from 'lodash.debounce';
 import { mapGetters, mapState } from 'vuex';
+import DeckSelector from '../form/DeckSelector';
+import SetSelector from '../form/SetSelector';
 
 const debouncedChangeRoute = debounce(($router, query) => {
   $router.push({ query });
@@ -82,6 +63,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
   /** @class CardFilters */
   export default {
     name: 'CardFilters',
+    components: { SetSelector, DeckSelector },
     data() {
       const filterData = {};
       for (let { name } of filterConfig) {
@@ -93,12 +75,6 @@ const debouncedChangeRoute = debounce(($router, query) => {
       };
     },
     computed: {
-      ...mapState('decks', {
-        deckList: 'list',
-      }),
-      ...mapState('sets', {
-        setList: 'list',
-      }),
       ...mapState('cards', {
         totalCards: state => state.list.meta.pagination.total,
       }),

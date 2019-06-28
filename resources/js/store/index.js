@@ -22,27 +22,7 @@ const store = new Vuex.Store({
     sets,
     statistics,
   },
-  state: {
-    startedInitialTasks: false,
-  },
-  mutations: {
-    STARTED_INITIAL_TASKS(state) {
-      state.startedInitialTasks = true;
-    },
-  },
   actions: {
-    async doInitialCardTasks({ commit, dispatch, state }, query) {
-      if (!state.startedInitialTasks) {
-        commit('STARTED_INITIAL_TASKS');
-        await Promise.all([
-          // Dropdowns for filters.
-          dispatch('decks/listDecks'),
-          dispatch('sets/listSets'),
-          // First cards.
-          dispatch('listCardsAndFetchStatistics', query),
-        ]);
-      }
-    },
     async listCardsAndFetchStatistics({ dispatch }, query) {
       const listCardsPromise = dispatch('cards/listCards', query);
       dispatch('statistics/fetchStatistics', query);
